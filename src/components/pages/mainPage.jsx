@@ -3,6 +3,7 @@ import RandomChar from "../randomChar/RandomChar";// eslint-disable-line
 import CharList from "../charList/CharList";// eslint-disable-line
 import CharInfo from "../charInfo/CharInfo";// eslint-disable-line
 import ErrorWrapper from "../errorWrapper/ErrorWrapper";
+import SearchCharacter from "../searchCharacter/SearchCharacter";
 
 import decoration from '../../resources/img/vision.png';// eslint-disable-line
 
@@ -24,9 +25,14 @@ const MainPage = () => {
         <ErrorWrapper>
           <CharList onCharSelected={onCharSelected} />
         </ErrorWrapper>
-        <ErrorWrapper>
-          <CharInfo charId={selectedChar} />
+        <div>
+          <ErrorWrapper>
+          <CharInfo charId={ selectedChar } />
         </ErrorWrapper>
+        <ErrorWrapper>
+          <SearchCharacter/>
+        </ErrorWrapper>
+        </div>
       </div>
       <img className="bg-decoration" src={decoration} alt="vision" />
     </>

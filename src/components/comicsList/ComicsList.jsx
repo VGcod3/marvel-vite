@@ -5,6 +5,8 @@ import './comicsList.scss';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Ad from '../ad/Ad'
+import FadeIn from "../fadeIn/FadeIn"
+
 
 import useMarvelService from '../../services/MarvelService';
 import { useScroll } from '../../hooks/scrollLoad'
@@ -46,13 +48,16 @@ const ComicsList = () => {
 
     function renderItems(arr) {
         const items = arr.map((item, i) =>
-        (<li className="comics__item" key={i}>
-            <Link to={`/comics/${item.id}`}>
-                <img src={item.thumbnail} alt="ultimate war" className="comics__item-img" />
-                <div className="comics__item-name">{item.title}</div>
-                <div className="comics__item-price">{item.price}</div>
-            </Link>
-        </li>)
+            (<li className="comics__item" key={ i }>
+                <FadeIn>
+                    <Link to={`/comics/${item.id}`}>
+                    <img src={item.thumbnail} alt="ultimate war" className="comics__item-img" />
+                    <div className="comics__item-name">{item.title}</div>
+                    <div className="comics__item-price">{item.price}</div>
+                 </Link>
+                </FadeIn >
+            </li>
+        )
         );
 
         return (

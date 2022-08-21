@@ -1,29 +1,22 @@
 class myStorage {
-
-  constructor(key, storageType) {
+  constructor(key, storageType = localStorage) {
     this.key = key;
     this.storageType = storageType;
   }
 
   set(value) {
-    this.storageType.setItem(this.key, value);
+    this.storageType.setItem(this.key, JSON.stringify(value));
   }
 
   get() {
-    return this.storageType.getItem(this.key);
+    return JSON.parse(this.storageType.getItem(this.key));
   }
 
   clear() {
     this.storageType.setItem(this.key, 'null');
   }
 
-  isEmpty() {
-    if (this.storageType.getItem(this.key) === 'null' || this.storageType.getItem(this.key) === 'undefined') {
-      return true;
-    }
-
-    return false;
-  }
+  isEmpty = () => !this.get();
 };
 
 export { myStorage };

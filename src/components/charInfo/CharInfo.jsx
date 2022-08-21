@@ -5,6 +5,8 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner'
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
+import FadeIn from "../fadeIn/FadeIn"
+
 
 import './charInfo.scss';
 
@@ -63,7 +65,7 @@ const View = ({ char }) => {
     }
 
     return (
-        <>
+        <FadeIn>
             <div className="char__basics">
                 <img src={thumbnail} alt={name} style={imgStyle} />
                 <div>
@@ -92,7 +94,7 @@ const View = ({ char }) => {
                     </li>)
                 })}
             </ul>
-        </>
+        </FadeIn>
     )
 }
 

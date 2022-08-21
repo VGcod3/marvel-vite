@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import './randomChar.scss';
 import useMarvelService from '../../services/MarvelService'
 import mjolnir from '../../resources/img/mjolnir.png';
+import FadeIn from "../fadeIn/FadeIn"
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -17,7 +18,7 @@ const RandomChar = React.memo(() => {
 
     useEffect(() => {
         updateChar();
-        // personageReloadTimer.current = setInterval(() => { updateChar() }, 5000);
+        personageReloadTimer.current = setInterval(() => { updateChar() }, 10000);
         return () => clearInterval(personageReloadTimer.current);
     }, [])
 
@@ -28,7 +29,7 @@ const RandomChar = React.memo(() => {
     const resetInterval = () => {
         if (personageReloadTimer.current) {
             clearInterval(personageReloadTimer.current)
-            personageReloadTimer.current = setInterval(() => { updateChar() }, 5000)
+            personageReloadTimer.current = setInterval(() => { updateChar() },10000)
         }
     }
 
@@ -55,7 +56,8 @@ const RandomChar = React.memo(() => {
 
 
     return (
-        <div className="randomchar">
+        
+            <div className="randomchar">
 
             {errorMessage}
             {spinner}
@@ -73,7 +75,7 @@ const RandomChar = React.memo(() => {
                 </button>
                 <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
             </div>
-        </div>
+        </div>        
     )
 
 })
@@ -88,6 +90,7 @@ const View = ({ char }) => {
     }
 
     return (
+        <FadeIn>
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" className='randomchar__img' style={imgStyle} />
             <div className="randomchar__info">
@@ -104,7 +107,8 @@ const View = ({ char }) => {
                     </a>
                 </div>
             </div>
-        </div>)
+            </div>
+            </FadeIn>)
 }
 
 export default RandomChar;

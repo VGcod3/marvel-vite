@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { myStorage } from './storage'
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false)
@@ -11,12 +12,22 @@ export const useHttp = () => {
     setLoading(true)
 
     try {
-      const response = await fetch(url, { method, body, headers });
-      if (!response.ok) {
-        throw Error(`Could not fetch ${url}, status: ${response.status} `)
-      }
+      const dataInStorage = new myStorage(`${url}`)
 
-      return await response.json();
+      if (dataInStorage.isEmpty()) {
+        const response = await fetch(url, { method, body, headers });
+
+        if (!response.ok) {
+          throw Error(`Could not fetch ${url}, status: ${response.status} `)
+        }
+
+        const result = await response.json()
+
+        dataInStorage.set(result)
+        return result;
+
+      }
+      return dataInStorage.get()
 
     } catch (error) {
       console.error(error)
@@ -24,7 +35,6 @@ export const useHttp = () => {
       throw error
     } finally {
       setLoading(false)
-
     }
   }, [])
 
@@ -34,4 +44,3 @@ export const useHttp = () => {
 
   return { request, error, loading, clearError }
 }
-

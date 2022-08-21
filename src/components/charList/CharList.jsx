@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import CharItem from '../charItem/CharItem'
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService';
 import { useScroll } from '../../hooks/scrollLoad'
 import './charList.scss';
+
 
 const CharList = (props) => {
 
@@ -30,15 +33,16 @@ const CharList = (props) => {
 
     function onCharListLoaded(newCharList) {
         let ended = false;
+
         if (newCharList.length < 9) {
             ended = true;
         }
 
 
         setCharList(charList => [...charList, ...newCharList]);
-        setNewItemLoading(newItemLoading => false);
+        setNewItemLoading(false);
         setOffset(offset => offset + 9);
-        setCharEnded(charEnded => ended);
+        setCharEnded(ended);
     }
 
     const itemRefs = useRef([]);
@@ -57,26 +61,31 @@ const CharList = (props) => {
             }
 
             return (
-                <li
-                    className="char__item"
-                    tabIndex={0}
-                    ref={el => itemRefs.current[i] = el}
-                    key={item.id}
-                    onClick={() => {
+                <CharItem
+                    imgStyle={ imgStyle }
+                    img={item.thumbnail}
+                    name={ item.name }
+                    itemRefs={ itemRefs }
+                    id={ item.id }
+                    key={ item.id }
+                    i={i}
+
+                    handleClick={() => {
                         props.onCharSelected(item.id);
                         focusOnItem(i);
-                    }}
-                    onKeyPress={(e) => {
+                    } }
+        
+                    handleKeyPress={(e) => {
                         if (e.key === ' ' || e.key === "Enter") {
                             props.onCharSelected(item.id);
                             focusOnItem(i);
                         }
-                    }}>
-                    <img src={item.thumbnail} alt={item.name} style={imgStyle} />
-                    <div className="char__name">{item.name}</div>
-                </li>
+                    } }
+                    
+                />
             )
         });
+
         return (
             <ul className="char__grid">
                 {items}

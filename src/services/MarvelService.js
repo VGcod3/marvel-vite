@@ -1,14 +1,11 @@
 import { useHttp } from "../hooks/http.hook";
 
 
-
 const useMarvelService = () => {
   const { loading, request, error, clearError } = useHttp()
 
   const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
   const _publicKey = import.meta.env.VITE_MARVEL_API_KEY;
-  // const _publicKey = "40ad5e34c59f99b7cf492065754a5e7d";
-
 
   const getAllCharacters = async (offset = 200) => {
     const res = await request(`${_apiBase}characters?limit=9&offset=${offset}&apikey=${_publicKey}`);

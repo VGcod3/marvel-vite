@@ -13,7 +13,8 @@ export const useScroll = (hookHandler) => {
   }, [newItemLoading])
 
   const onScroll = () => {
-    if (window.innerHeight + window.pageYOffset + 1000 >= document.body.offsetHeight) {
+    if (window.innerHeight + window.pageYOffset + 600 >= document.body.offsetHeight ||
+      window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
       setNewItemLoading(true);
     }
   };
