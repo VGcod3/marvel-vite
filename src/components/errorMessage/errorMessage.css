@@ -1,0 +1,8 @@
+#errorImage {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  height: 250px;
+  margin: 40px;
+  padding: 0;
+}
